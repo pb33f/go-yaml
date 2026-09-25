@@ -168,6 +168,7 @@ func NewEmitter() Emitter {
 
 // Emit an event.
 func (emitter *Emitter) Emit(event *Event) error {
+	emitter.reclaimEvents()
 	emitter.events = append(emitter.events, *event)
 	for !emitter.needMoreEvents() {
 		event := &emitter.events[emitter.events_head]
@@ -181,6 +182,22 @@ func (emitter *Emitter) Emit(event *Event) error {
 		emitter.events_head++
 	}
 	return nil
+}
+
+// reclaimEvents makes room in a full queue by dropping the events already
+// written from its front.
+// The queue only ever holds a short lookahead, but without this it keeps a
+// slot for every event of the document until the emitter is deleted.
+func (emitter *Emitter) reclaimEvents() {
+	if emitter.events_head == 0 || len(emitter.events) < cap(emitter.events) {
+		return
+	}
+	n := copy(emitter.events, emitter.events[emitter.events_head:])
+	for i := n; i < len(emitter.events); i++ {
+		emitter.events[i] = Event{}
+	}
+	emitter.events = emitter.events[:n]
+	emitter.events_head = 0
 }
 
 // Delete an emitter object.
