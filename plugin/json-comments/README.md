@@ -7,8 +7,8 @@ It does not use a shared library.
 
 ```go
 import (
-    "go.yaml.in/yaml/v4"
-    jsoncomments "go.yaml.in/yaml/v4/plugin/json-comments"
+    "github.com/pb33f/go-yaml"
+    jsoncomments "github.com/pb33f/go-yaml/plugin/json-comments"
 )
 
 var value any

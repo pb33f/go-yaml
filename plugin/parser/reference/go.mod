@@ -1,10 +1,10 @@
-module go.yaml.in/yaml/v4/plugin/parser/reference
+module github.com/pb33f/go-yaml/plugin/parser/reference
 
 go 1.24
 
 require (
+	github.com/pb33f/go-yaml v0.0.0
 	github.com/yamlstar/yamlstar-plugin-parser-reference v0.2.5
-	go.yaml.in/yaml/v4 v4.0.0-rc.6
 )
 
 require (
@@ -18,3 +18,5 @@ require (
 	go4.org/unsafe/assume-no-moving-gc v0.0.0-20230525183740-e7c30c78aeb2 // indirect
 	golang.org/x/sys v0.8.0 // indirect
 )
+
+replace github.com/pb33f/go-yaml => ../../..

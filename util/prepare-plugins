@@ -110,7 +110,7 @@ if ($json_enabled) {
     push @plugins, {
         api => 'json-comments',
         module => 'github.com/yamlstar/yamlstar-plugin-json-comments',
-        wrapper => 'go.yaml.in/yaml/v4/plugin/json-comments',
+        wrapper => 'github.com/pb33f/go-yaml/plugin/json-comments',
         wrapper_path => "$root/plugin/json-comments",
         upstream => $upstream,
         local => $local,
@@ -120,7 +120,7 @@ if ($json_enabled) {
         source => <<'GO',
 package main
 
-import jsoncomments "go.yaml.in/yaml/v4/plugin/json-comments"
+import jsoncomments "github.com/pb33f/go-yaml/plugin/json-comments"
 
 func init() {
 	compiledPluginRegistrations = append(
@@ -144,7 +144,7 @@ if ($reference_enabled) {
     push @plugins, {
         api => 'parser-reference',
         module => 'github.com/yamlstar/yamlstar-plugin-parser-reference',
-        wrapper => 'go.yaml.in/yaml/v4/plugin/parser/reference',
+        wrapper => 'github.com/pb33f/go-yaml/plugin/parser/reference',
         wrapper_path => "$root/plugin/parser/reference",
         upstream => $upstream,
         local => $local,
@@ -154,7 +154,7 @@ if ($reference_enabled) {
         source => <<'GO',
 package main
 
-import reference "go.yaml.in/yaml/v4/plugin/parser/reference"
+import reference "github.com/pb33f/go-yaml/plugin/parser/reference"
 
 func init() {
 	compiledPluginRegistrations = append(
@@ -170,10 +170,10 @@ remove_tree($stage);
 make_path($stage);
 copy_tree("$root/cmd/go-yaml", $stage);
 
-run_go($stage, 'mod', 'init', 'go.yaml.in/yaml/v4/plugin-cli');
+run_go($stage, 'mod', 'init', 'github.com/pb33f/go-yaml/plugin-cli');
 run_go($stage, 'mod', 'edit', '-go=1.24');
-run_go($stage, 'mod', 'edit', "-replace=go.yaml.in/yaml/v4=$root");
-run_go($stage, 'get', 'go.yaml.in/yaml/v4@v4.0.0-rc.6');
+run_go($stage, 'mod', 'edit', "-replace=github.com/pb33f/go-yaml=$root");
+run_go($stage, 'get', 'github.com/pb33f/go-yaml@v0.0.0');
 for my $plugin (@plugins) {
     write_file("$stage/$plugin->{api}.go", $plugin->{source});
     run_go($stage, 'mod', 'edit',

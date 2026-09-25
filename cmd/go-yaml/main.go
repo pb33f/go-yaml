@@ -17,10 +17,10 @@ import (
 	"os"
 	"strings"
 
-	"go.yaml.in/yaml/v4"
-	"go.yaml.in/yaml/v4/internal/libyaml"
-	pluginreg "go.yaml.in/yaml/v4/internal/plugin"
-	"go.yaml.in/yaml/v4/plugin/tabindent"
+	"github.com/pb33f/go-yaml"
+	"github.com/pb33f/go-yaml/internal/libyaml"
+	pluginreg "github.com/pb33f/go-yaml/internal/plugin"
+	"github.com/pb33f/go-yaml/plugin/tabindent"
 )
 
 // version is the current version of the go-yaml CLI tool.
@@ -780,7 +780,7 @@ func ProcessNodeUnmarshal(reader io.Reader, profuse bool) error {
 func printHelp() {
 	fmt.Printf(`go-yaml version %s
 
-The 'go-yaml' tool shows how the go.yaml.in/yaml/v4 library handles YAML both
+The 'go-yaml' tool shows how the github.com/pb33f/go-yaml library handles YAML both
 internally and externally. It is a tool for testing and debugging the library.
 
 It reads YAML input text from stdin or a file and writes results to stdout.

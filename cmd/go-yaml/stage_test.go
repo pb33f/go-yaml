@@ -10,7 +10,7 @@ import (
 	"strings"
 	"testing"
 
-	"go.yaml.in/yaml/v4"
+	"github.com/pb33f/go-yaml"
 )
 
 func TestDetailedNodeContractKey(t *testing.T) {

@@ -11,8 +11,8 @@ import (
 	"fmt"
 	"io"
 
-	"go.yaml.in/yaml/v4"
-	"go.yaml.in/yaml/v4/internal/libyaml"
+	"github.com/pb33f/go-yaml"
+	"github.com/pb33f/go-yaml/internal/libyaml"
 )
 
 // Parser provides access to the internal YAML Parser for CLI use

@@ -15,7 +15,7 @@ The current implementations are:
 | `limit` | `limit` | `plugin/limit` | yes |
 
 The optional packages are separate Go modules.
-Importing the core `go.yaml.in/yaml/v4` module does not acquire Glojure or the
+Importing the core `github.com/pb33f/go-yaml` module does not acquire Glojure or the
 YAMLStar generated code.
 
 ## Direct Go use
@@ -25,9 +25,9 @@ directly.
 
 ```go
 import (
-    "go.yaml.in/yaml/v4"
-    jsoncomments "go.yaml.in/yaml/v4/plugin/json-comments"
-    "go.yaml.in/yaml/v4/plugin/limit"
+    "github.com/pb33f/go-yaml"
+    jsoncomments "github.com/pb33f/go-yaml/plugin/json-comments"
+    "github.com/pb33f/go-yaml/plugin/limit"
 )
 
 var value any
@@ -141,14 +141,14 @@ A null setting disables that one check.
 
 ### Reference parser
 
-`go.yaml.in/yaml/v4/plugin/parser/reference` adapts the generated Go parser
+`github.com/pb33f/go-yaml/plugin/parser/reference` adapts the generated Go parser
 from `github.com/yamlstar/yamlstar-plugin-parser-reference`.
 The canonical parser source remains in `yaml/yaml-reference-parser-clj`.
 It requires Go 1.24 or newer and does not need Clojure, Gloat, CGO, or a shared
 library at runtime.
 
 ```go
-import reference "go.yaml.in/yaml/v4/plugin/parser/reference"
+import reference "github.com/pb33f/go-yaml/plugin/parser/reference"
 
 var value any
 err := yaml.Load(input, &value, yaml.WithPlugin(reference.New()))
@@ -156,7 +156,7 @@ err := yaml.Load(input, &value, yaml.WithPlugin(reference.New()))
 
 ### JSON comments
 
-`go.yaml.in/yaml/v4/plugin/json-comments` adapts the sanitizer from
+`github.com/pb33f/go-yaml/plugin/json-comments` adapts the sanitizer from
 `github.com/yamlstar/yamlstar-plugin-json-comments`.
 It accepts UTF-8 YAML containing `//` and non-nesting `/* */` comments.
 Comment markers inside quoted scalars, block scalars, and URLs are preserved.

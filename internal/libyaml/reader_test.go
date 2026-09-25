@@ -10,7 +10,7 @@ import (
 	"fmt"
 	"testing"
 
-	"go.yaml.in/yaml/v4/internal/testutil/assert"
+	"github.com/pb33f/go-yaml/internal/testutil/assert"
 )
 
 func TestReader(t *testing.T) {

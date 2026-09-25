@@ -13,10 +13,10 @@ import (
 	"reflect"
 	"testing"
 
-	"go.yaml.in/yaml/v4"
-	"go.yaml.in/yaml/v4/internal/libyaml"
-	"go.yaml.in/yaml/v4/internal/testutil/assert"
-	"go.yaml.in/yaml/v4/internal/testutil/datatest"
+	"github.com/pb33f/go-yaml"
+	"github.com/pb33f/go-yaml/internal/libyaml"
+	"github.com/pb33f/go-yaml/internal/testutil/assert"
+	"github.com/pb33f/go-yaml/internal/testutil/datatest"
 )
 
 func assertNodeEqual(t *testing.T, want *yaml.Node, got *yaml.Node) {

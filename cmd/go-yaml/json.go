@@ -12,7 +12,7 @@ import (
 	"io"
 	"os"
 
-	"go.yaml.in/yaml/v4"
+	"github.com/pb33f/go-yaml"
 )
 
 // ProcessJSON reads YAML from reader and outputs JSON encoding

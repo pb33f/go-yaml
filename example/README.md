@@ -108,7 +108,7 @@ unmarshalers
 ### Basic Load and Dump
 
 ```go
-import "go.yaml.in/yaml/v4"
+import "github.com/pb33f/go-yaml"
 
 // Load
 var config Config
@@ -146,7 +146,7 @@ dumper, _ := yaml.NewDumper(writer,
 
 ## Learn More
 
-- See the [main package documentation](https://pkg.go.dev/go.yaml.in/yaml/v4)
+- See the [main package documentation](https://pkg.go.dev/github.com/pb33f/go-yaml)
   for API reference
 - Run `make doc-serve` from the project root to view local documentation
 - Check individual example source code for detailed comments

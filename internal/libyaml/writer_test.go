@@ -11,7 +11,7 @@ import (
 	"errors"
 	"testing"
 
-	"go.yaml.in/yaml/v4/internal/testutil/assert"
+	"github.com/pb33f/go-yaml/internal/testutil/assert"
 )
 
 func TestWriter(t *testing.T) {

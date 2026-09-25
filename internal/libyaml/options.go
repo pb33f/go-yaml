@@ -51,8 +51,8 @@ type Options struct {
 	//
 	// [yaml.NewDecoder] and [yaml.Unmarshal] set this flag to true to enable legacy behavior for backward compatibility.
 	//
-	// [NewDecoder]: https://pkg.go.dev/go.yaml.in/yaml/v4#NewDecoder
-	// [Unmarshal]: https://pkg.go.dev/go.yaml.in/yaml/v4#Unmarshal
+	// [NewDecoder]: https://pkg.go.dev/github.com/pb33f/go-yaml#NewDecoder
+	// [Unmarshal]: https://pkg.go.dev/github.com/pb33f/go-yaml#Unmarshal
 	allowLegacyTrailingContent bool
 }
 
@@ -469,8 +469,8 @@ var DefaultOptions = &Options{
 // to indicate that the legacy behavior of allowing trailing content
 // after a document should be enabled for backward compatibility.
 //
-// [NewDecoder]: https://pkg.go.dev/go.yaml.in/yaml/v4#NewDecoder
-// [Unmarshal]: https://pkg.go.dev/go.yaml.in/yaml/v4#Unmarshal
+// [NewDecoder]: https://pkg.go.dev/github.com/pb33f/go-yaml#NewDecoder
+// [Unmarshal]: https://pkg.go.dev/github.com/pb33f/go-yaml#Unmarshal
 func SetLegacyAllowTrailingContent(o *Options) {
 	o.allowLegacyTrailingContent = true
 }
