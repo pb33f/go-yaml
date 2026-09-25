@@ -5,7 +5,7 @@ This optional Go module adapts
 to `yaml.ParserPlugin`.
 
 ```go
-import reference "go.yaml.in/yaml/v4/plugin/parser/reference"
+import reference "github.com/pb33f/go-yaml/plugin/parser/reference"
 
 err := yaml.Load(input, &value, yaml.WithPlugin(reference.New()))
 ```

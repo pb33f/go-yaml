@@ -10,8 +10,8 @@ import (
 	"sync/atomic"
 	"testing"
 
-	"go.yaml.in/yaml/v4"
-	"go.yaml.in/yaml/v4/plugin/limit"
+	"github.com/pb33f/go-yaml"
+	"github.com/pb33f/go-yaml/plugin/limit"
 )
 
 // generateAliases builds YAML with n aliases referencing a large anchor.

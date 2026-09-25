@@ -8,8 +8,8 @@ import (
 	"errors"
 	"fmt"
 
+	"github.com/pb33f/go-yaml"
 	referenceparser "github.com/yamlstar/yamlstar-plugin-parser-reference/parser"
-	"go.yaml.in/yaml/v4"
 )
 
 // Plugin parses YAML with the YAMLStar reference parser.

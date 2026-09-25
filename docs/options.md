@@ -8,7 +8,7 @@ formatting and behavior.
 The simplest way to use go-yaml is with the default settings:
 
 ```go
-import "go.yaml.in/yaml/v4"
+import "github.com/pb33f/go-yaml"
 
 // Uses v4 defaults (2-space indent, compact sequences)
 dumper, _ := yaml.NewDumper(writer)
@@ -714,6 +714,6 @@ format.
 ## See Also
 
 - [Dumping and Loading API Guide](dump-load-api.md) - Complete guide to Dump/Load APIs
-- [API Documentation](https://pkg.go.dev/go.yaml.in/yaml/v4) - Full API
+- [API Documentation](https://pkg.go.dev/github.com/pb33f/go-yaml) - Full API
   reference
 - [Examples](../example/README.md) - Runnable code examples

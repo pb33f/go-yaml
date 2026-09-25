@@ -16,10 +16,10 @@ import (
 	"strings"
 	"sync"
 
-	"go.yaml.in/yaml/v4"
-	"go.yaml.in/yaml/v4/internal/libyaml"
-	pluginreg "go.yaml.in/yaml/v4/internal/plugin"
-	"go.yaml.in/yaml/v4/plugin/tabindent"
+	"github.com/pb33f/go-yaml"
+	"github.com/pb33f/go-yaml/internal/libyaml"
+	pluginreg "github.com/pb33f/go-yaml/internal/plugin"
+	"github.com/pb33f/go-yaml/plugin/tabindent"
 )
 
 func main() {
@@ -384,10 +384,10 @@ func stageNative(root, stage, goTool string) error {
 		return err
 	}
 	for _, args := range [][]string{
-		{"mod", "init", "go.yaml.in/yaml/v4/config-cli"},
+		{"mod", "init", "github.com/pb33f/go-yaml/config-cli"},
 		{"mod", "edit", "-go=1.18"},
-		{"mod", "edit", "-replace=go.yaml.in/yaml/v4=" + root},
-		{"get", "go.yaml.in/yaml/v4@v4.0.0-rc.6"},
+		{"mod", "edit", "-replace=github.com/pb33f/go-yaml=" + root},
+		{"get", "github.com/pb33f/go-yaml@v0.0.0"},
 		{"mod", "tidy"},
 	} {
 		cmd := exec.Command(goTool, args...)

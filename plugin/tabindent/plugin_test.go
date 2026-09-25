@@ -6,8 +6,8 @@ import (
 	"sync"
 	"testing"
 
-	"go.yaml.in/yaml/v4"
-	"go.yaml.in/yaml/v4/plugin/tabindent"
+	"github.com/pb33f/go-yaml"
+	"github.com/pb33f/go-yaml/plugin/tabindent"
 )
 
 func TestLoadTabIndentation(t *testing.T) {

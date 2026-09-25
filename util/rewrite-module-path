@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+# Copyright 2026 The go-yaml Project Contributors
+# SPDX-License-Identifier: Apache-2.0
+
+# Rewrite the upstream module path to this fork's module path.
+#
+# This fork is published as github.com/pb33f/go-yaml.
+# Upstream changes arrive with the go.yaml.in/yaml/v4 path.
+# After merging upstream, run this, then 'go mod tidy' in each module.
+#
+# Upstream pins its own v4 versions where a module is built against this
+# checkout through a replace directive.
+# A v4 version is not valid for this path, so those pins become v0.0.0.
+
+set -euo pipefail
+
+upstream=go.yaml.in/yaml/v4
+fork=github.com/pb33f/go-yaml
+
+cd "$(dirname "$0")/.."
+
+git grep -l --fixed-strings "$upstream" -- ':!util/rewrite-module-path' |
+  while IFS= read -r file; do
+    perl -pi -e "s{\Q$upstream\E}{$fork}g;
+      s{(\Q$fork\E[@ ])v4\.[0-9][0-9A-Za-z.+-]*}{\${1}v0.0.0}g" "$file"
+    echo "rewrote $file"
+  done

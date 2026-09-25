@@ -11,7 +11,7 @@ import (
 	"io"
 	"strings"
 
-	"go.yaml.in/yaml/v4"
+	"github.com/pb33f/go-yaml"
 )
 
 type Config struct {

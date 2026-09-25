@@ -8,8 +8,8 @@ package jsoncomments
 import (
 	"errors"
 
+	"github.com/pb33f/go-yaml"
 	"github.com/yamlstar/yamlstar-plugin-json-comments/sanitizer"
-	"go.yaml.in/yaml/v4"
 )
 
 // Plugin sanitizes JSON-style comments before parsing.

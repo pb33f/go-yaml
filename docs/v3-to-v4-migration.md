@@ -1,7 +1,7 @@
 # Migrating from v3 to v4
 
 This guide will help you migrate your code from `go.yaml.in/yaml/v3`
-(or `gopkg.in/yaml.v3`) to `go.yaml.in/yaml/v4`.
+(or `gopkg.in/yaml.v3`) to `github.com/pb33f/go-yaml`.
 
 ## Quick Migration Checklist
 
@@ -21,7 +21,7 @@ import "go.yaml.in/yaml/v3"
 
 **v4:**
 ```go
-import "go.yaml.in/yaml/v4"
+import "github.com/pb33f/go-yaml"
 ```
 
 Update all import statements throughout your codebase.
@@ -278,7 +278,7 @@ go test ./...
 
 # Verify YAML output formatting
 # Use the go-yaml CLI tool to compare
-go install go.yaml.in/yaml/v4/cmd/go-yaml@latest
+go install github.com/pb33f/go-yaml/cmd/go-yaml@latest
 ./go-yaml -n < testfile.yaml
 ```
 
@@ -303,7 +303,7 @@ yaml.Dump(&data, yaml.WithV3Defaults())
 
 If you encounter issues during migration:
 
-- Check the [API documentation](https://pkg.go.dev/go.yaml.in/yaml/v4)
+- Check the [API documentation](https://pkg.go.dev/github.com/pb33f/go-yaml)
 - Browse [examples](example/)
 - Open an [issue](https://github.com/yaml/go-yaml/issues)
 - Ask in [Slack](https://cloud-native.slack.com/archives/C08PPAT8PS7)
@@ -313,6 +313,6 @@ If you encounter issues during migration:
 - Explore the new [functional options](#functional-options)
 - Review the [examples](example/) directory
 - Read the [full API documentation](
-  https://pkg.go.dev/go.yaml.in/yaml/v4)
+  https://pkg.go.dev/github.com/pb33f/go-yaml)
 - Try the [go-yaml CLI tool](README.md#the-go-yaml-cli-tool) for
   debugging

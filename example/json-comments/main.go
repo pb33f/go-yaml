@@ -5,8 +5,8 @@ import (
 	"log"
 	"os"
 
-	"go.yaml.in/yaml/v4"
-	jsoncomments "go.yaml.in/yaml/v4/plugin/json-comments"
+	"github.com/pb33f/go-yaml"
+	jsoncomments "github.com/pb33f/go-yaml/plugin/json-comments"
 )
 
 const pluginOptions = `

@@ -255,7 +255,7 @@ same simplicity with full options control.
 ### Marshal
 
 ```go
-import "go.yaml.in/yaml/v4"
+import "github.com/pb33f/go-yaml"
 
 type Config struct {
     Name    string `yaml:"name"`
@@ -606,5 +606,5 @@ func MergeConfigs(files []string) ([]byte, error) {
 ## See Also
 
 - [Options Guide](options.md) - Complete option reference
-- [API Documentation](https://pkg.go.dev/go.yaml.in/yaml/v4) - Full API
+- [API Documentation](https://pkg.go.dev/github.com/pb33f/go-yaml) - Full API
   reference

@@ -3,8 +3,8 @@ module example.com/json-comments-go-run
 go 1.24
 
 require (
-	go.yaml.in/yaml/v4 v4.0.0-rc.6
-	go.yaml.in/yaml/v4/plugin/json-comments v0.0.0
+	github.com/pb33f/go-yaml v0.0.0
+	github.com/pb33f/go-yaml/plugin/json-comments v0.0.0
 )
 
 require (
@@ -20,6 +20,6 @@ require (
 	golang.org/x/sys v0.8.0 // indirect
 )
 
-replace go.yaml.in/yaml/v4 => ../..
+replace github.com/pb33f/go-yaml => ../..
 
-replace go.yaml.in/yaml/v4/plugin/json-comments => ../../plugin/json-comments
+replace github.com/pb33f/go-yaml/plugin/json-comments => ../../plugin/json-comments

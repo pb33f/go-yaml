@@ -6,9 +6,9 @@ package yaml
 import (
 	"errors"
 
-	"go.yaml.in/yaml/v4/internal/libyaml"
-	pluginreg "go.yaml.in/yaml/v4/internal/plugin"
-	"go.yaml.in/yaml/v4/plugin/limit"
+	"github.com/pb33f/go-yaml/internal/libyaml"
+	pluginreg "github.com/pb33f/go-yaml/internal/plugin"
+	"github.com/pb33f/go-yaml/plugin/limit"
 )
 
 // LimitPlugin configures safety limits for YAML parsing.
@@ -19,7 +19,7 @@ import (
 //
 // Example usage:
 //
-//	import "go.yaml.in/yaml/v4/plugin/limit"
+//	import "github.com/pb33f/go-yaml/plugin/limit"
 //	loader := yaml.NewLoader(data, yaml.WithPlugin(limit.New(limit.AliasNone())))
 type LimitPlugin interface {
 	// CheckDepth is called when the parser increases nesting depth.
