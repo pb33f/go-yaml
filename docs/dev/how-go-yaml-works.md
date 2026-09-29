@@ -248,7 +248,9 @@ The Representer converts Go values to a tagged Node tree:
 **File**: `internal/libyaml/desolver.go`
 
 The Desolver removes inferable tags (NEW in v4, inverse of Resolver):
-- Walks the tagged node tree from Representer
+- Works on the tagged node tree from Representer, one node at a time, as the
+  Serializer walks it
+- Never modifies the tree, which may contain nodes owned by the caller
 - Removes tags that can be inferred during parsing
 - Preserves explicit tags when content would be misresolved
 - Produces cleaner YAML output without unnecessary type annotations
@@ -260,6 +262,7 @@ The Desolver removes inferable tags (NEW in v4, inverse of Resolver):
 
 The Serializer linearizes the node tree:
 - Walks the node tree depth-first
+- Asks the Desolver for the tag and style of each node
 - Produces a stream of events
 - Handles anchor assignment for sharing/circular references
 - Determines whether collections should use flow style

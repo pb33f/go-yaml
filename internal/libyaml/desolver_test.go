@@ -22,19 +22,23 @@ func TestDesolver(t *testing.T) {
 				Value: tc.Node.Value,
 			}
 
+			orig := *node
 			d := NewDesolver(nil)
-			d.Desolve(node)
+			tag, style := d.Desolve(node)
+
+			// Desolving must not modify the node
+			assert.DeepEqual(t, orig, *node)
 
 			// Extract want fields from tc.Want (type any)
 			wantMap := tc.Want.(map[string]any)
 			wantTag := wantMap["tag"].(string)
 
 			// Check tag
-			assert.Equal(t, wantTag, node.Tag)
+			assert.Equal(t, wantTag, tag)
 
 			// Check style
 			if wantStyle, ok := wantMap["style"].(string); ok {
-				hasQuote := node.Style&(SingleQuotedStyle|DoubleQuotedStyle) != 0
+				hasQuote := style&(SingleQuotedStyle|DoubleQuotedStyle) != 0
 				switch wantStyle {
 				case "Plain":
 					assert.False(t, hasQuote)
@@ -70,19 +74,23 @@ func TestDesolver(t *testing.T) {
 				node.Style = TaggedStyle
 			}
 
+			orig := *node
 			d := NewDesolver(nil)
-			d.Desolve(node)
+			tag, style := d.Desolve(node)
+
+			// Desolving must not modify the node
+			assert.DeepEqual(t, orig, *node)
 
 			// Extract want fields
 			wantMap := tc.Want.(map[string]any)
 			wantTag := wantMap["tag"].(string)
 
 			// Check tag is preserved
-			assert.Equal(t, wantTag, node.Tag)
+			assert.Equal(t, wantTag, tag)
 
 			// Check style if present
 			if wantStyle, ok := wantMap["style"].(string); ok {
-				hasQuote := node.Style&(SingleQuotedStyle|DoubleQuotedStyle) != 0
+				hasQuote := style&(SingleQuotedStyle|DoubleQuotedStyle) != 0
 				switch wantStyle {
 				case "Plain":
 					assert.False(t, hasQuote)
@@ -101,19 +109,23 @@ func TestDesolver(t *testing.T) {
 				Value: tc.Node.Value,
 			}
 
+			orig := *node
 			d := NewDesolver(nil)
-			d.Desolve(node)
+			tag, style := d.Desolve(node)
+
+			// Desolving must not modify the node
+			assert.DeepEqual(t, orig, *node)
 
 			// Extract want fields
 			wantMap := tc.Want.(map[string]any)
 			wantTag := wantMap["tag"].(string)
 
 			// Check tag removed
-			assert.Equal(t, wantTag, node.Tag)
+			assert.Equal(t, wantTag, tag)
 
 			// Check style
 			if wantStyle, ok := wantMap["style"].(string); ok {
-				hasQuote := node.Style&(SingleQuotedStyle|DoubleQuotedStyle) != 0
+				hasQuote := style&(SingleQuotedStyle|DoubleQuotedStyle) != 0
 				switch wantStyle {
 				case "Plain":
 					assert.False(t, hasQuote)
