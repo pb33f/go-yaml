@@ -517,14 +517,18 @@ pipeline.
 Entry points (such as `Dump()`, `Dumper.Dump()`, or `Node.Dump()`) orchestrate
 the process by creating and coordinating the stages:
 
-- **Entry points** create a **Dumper** which owns **Representer**,
-  **Desolver**, and **Serializer**
+- **Entry points** create a **Dumper** which owns **Representer** and
+  **Serializer**
 - **Entry points** call **Dumper.Dump()** which executes the 3-stage pipeline:
   1. **Representer.Represent()** converts Go values to tagged Node tree
   2. **Desolver.Desolve()** removes inferable tags to minimize output
+     (called by the Serializer for each node)
   3. **Serializer.Serialize()** converts Node tree to Events and pushes to
      Emitter
-- **Serializer** owns an **Emitter** and calls emit() to push Events
+- **Serializer** owns a **Desolver** and an **Emitter**, and calls emit() to
+  push Events
+- No stage modifies the Node tree: it may contain nodes owned by the caller
+  (a `*Node` passed to `Dump()`), which are used as-is rather than copied
 - **Emitter** accumulates Events, formats output, and calls **Writer** to flush
   bytes
 
@@ -540,7 +544,7 @@ Info:
 - Input: `reflect.Value` + `Options`
 - Output: `*Node` tree with explicit tags
 - Called From:
-  * Dumper ([`dumper.go:116`](../../internal/libyaml/dumper.go) /
+  * Dumper ([`dumper.go:117`](../../internal/libyaml/dumper.go) /
     `Dumper.Dump()`)
 - Important Processes:
   * `representer.go / marshal            - Dispatches by Go type`
@@ -582,32 +586,37 @@ Resolver).
 
 Info:
 - File: internal/libyaml/desolver.go (150+ lines)
-- Main Function: `func (d *Desolver) Desolve(node *Node)`
-- Input: `*Node` tree with explicit tags
-- Output: Modified Node tree with minimal tags (in-place)
+- Main Function: `func (d *Desolver) Desolve(node *Node) (tag string, style
+  Style)`
+- Input: `*Node` from a tree with explicit tags
+- Output: Tag and style to serialize the node with, minus inferable tags (the
+  node itself is not modified)
 - Called From:
-  * Dumper ([`dumper.go:119`](../../internal/libyaml/dumper.go) /
-    `Dumper.Dump()`)
+  * Serializer ([`serializer.go:114`](../../internal/libyaml/serializer.go) /
+    `Serializer.node()`)
 - Important Processes:
-  * `desolver.go / Desolve              - Walks node tree, removes inferable tags`
+  * `desolver.go / Desolve              - Tag and style, minus inferable tags`
   * `desolver.go / desolveScalar        - Checks if tag can be inferred`
   * `desolver.go / canInferTag          - Tests if value would resolve to same tag`
 
 Transforms:
 * **Tag elision** for scalars where tag can be inferred (`!!str "hello"` →
   `hello`)
-* **Recursive tree walking** to process all scalars in sequences and mappings
+* **Per-node decisions** for every node the Serializer walks through
 * **Preserve explicit tags** when content would be misresolved (e.g., `!!str
   "42"`)
 * **YAML 1.1 compatibility awareness** (checks for ambiguous old-style values)
 
 Notes:
 * NEW stage in v4, makes Dump symmetric with Load (mirrors Resolver)
-* Modifies the Node tree in-place (clears Tag field when inferable)
+* Never modifies the Node tree, unlike Resolver: the tree may contain nodes
+  owned by the caller, which may be read or dumped again (even concurrently),
+  so the tag and style are returned to the Serializer instead
 * This is the inverse operation of Resolver - while Resolver adds tags based on
   content, Desolver removes tags that can be inferred
 * Results in cleaner YAML output without unnecessary type annotations
-* Called between Representer and Serializer in the dump pipeline
+* Called by the Serializer for each node, between the Representer and the
+  Emitter in the dump pipeline
 
 
 ### Serializer
@@ -617,7 +626,7 @@ Converts Node tree to events (Stage 3 of Dump pipeline).
 Info:
 - File: internal/libyaml/serializer.go (250+ lines)
 - Main Function: `func (s *Serializer) Serialize(node *Node)`
-- Input: `*Node` tree with minimal tags (from Desolver)
+- Input: `*Node` tree with explicit tags (from Representer, read-only)
 - Output: Events pushed to owned Emitter
 - Called From:
   * Dumper ([`dumper.go:122`](../../internal/libyaml/dumper.go) /
@@ -625,6 +634,7 @@ Info:
 - Important Processes:
   * `serializer.go / emit                - Sends event to owned Emitter`
   * `serializer.go / node (recursive)    - Walks child nodes`
+  * `desolver.go / Desolve               - Tag and style of each node`
   * `serializer.go / isSimpleCollection  - Checks if flow style appropriate`
   * `emitter.go / Emitter.Emit           - Emits events (owned Emitter)`
 
@@ -640,7 +650,8 @@ Transforms:
 
 Notes:
 * Now a proper stage that owns the Emitter (was part of Representer before)
-* Receives Node tree with tags already optimized by Desolver stage
+* Applies the Desolver stage to each node, so tags are optimized in the
+  emitted events while the Node tree is left untouched
 * Simple collection = all scalar children, fits within line width
 * This stage is now symmetric with Composer on the Load side
 
